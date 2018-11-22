@@ -10,3 +10,7 @@
     height:100%;
     resize: none;
 }
+.box:focus
+{
+    border: 1px solid #0686d4;
+}

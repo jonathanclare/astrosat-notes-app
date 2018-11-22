@@ -8,3 +8,7 @@
     border: 1px solid #ccd0d5 ;
     width:100%;
 }
+.box:focus
+{
+    border: 1px solid #0686d4;
+}

@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Provider, connect} from 'react-redux'
+import {Provider, connect} from 'react-redux';
 import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
 import store from './store/store';
-import EditNote from './components/EditNote'
+import Note from './components/Note';
 import styles from './App.module.css';
 
 export default class App extends Component
@@ -17,9 +17,7 @@ export default class App extends Component
                     <div className={styles.app}>
                         <Switch>
                             <Route exact path="/" component={startup} />
-                            <Route exact path="/add" component={addNote} />
-                            <Route exact path="/note/:id" component={showNote} />
-                            <Route exact path="/edit/:id" component={editNote} />
+                            <Route exact path="/:id" component={viewNote} />
                             <Redirect to="/" />
                         </Switch>
                     </div>
@@ -31,32 +29,21 @@ export default class App extends Component
 
 // Route functions.
 
-// Default view is dependent on notes being available.
+// Default view is dependent on notes having been created.
 const initApp = props => 
 {
-    if (props.notes.length === 0) // No notes created yet.
-        return addNote(props);
+    if (props.notes.length === 0)
+        return editNote(props); // No notes created yet - start with add note page.
     else
-        return showNote(props);
+        return viewNote(props); // Notes created - start with view note page.
 };
+
 // We want to know if any notes have been created at startup so pass the notes into initApp() as a prop from the store.
 const mapStateToProps = state => ({notes: state.notes});
 const startup = connect(mapStateToProps)(initApp);
 
-// Add a new note - the default view if no notes are available.
-const addNote = props => 
-{
-    return (<EditNote />);
-};
-
-// Show a note - the default view if notes are available.
-const showNote = props => 
-{
-    return (<div>Show Note</div>);
-};
+// View a note - the default view if notes are available.
+const viewNote = props => (<Note mode="view" id={props.match.params.id} />);
 
 // Edit a note.
-const editNote = props => 
-{
-    return (<div>Edit Note</div>);
-};
+const editNote = props => (<Note mode="edit" id={props.match.params.id} />);
