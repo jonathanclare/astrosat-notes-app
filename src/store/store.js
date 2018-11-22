@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux';
-import {fetch, save} from './utils/localStorage';
-import {debounce} from './utils/dom';
+import {fetchState, saveState} from './utils/localStorage';
+import debounce from './utils/debounce';
 
 // Reducers
 
@@ -22,10 +22,13 @@ const notes = (state = [], action) =>
     }
 };
 
-const rootReducer = combineReducers({notes: notes});
+const rootReducer = combineReducers(
+{
+    notes: notes
+});
 
 // Fetch any state stored in local storage and use this when creating the store.
-const persistedState = fetch('astrosatNotesState');
+const persistedState = fetchState('astrosat-notes-app');
 
 console.log('PERSISTED STATE FROM LOCAL STORAGE:');
 console.log(persistedState);
@@ -34,11 +37,11 @@ const store = createStore(rootReducer, persistedState);
 // Subscribe to changes to the store so we can update local storage.
 store.subscribe(debounce(() =>
 {
-    save('astrosatNotesState', 
+    saveState('astrosat-notes-app', 
     {
         notes: store.getState().notes,
     });
-}), 1000);
+}));
 
 export default store;
 
@@ -46,4 +49,4 @@ export default store;
 export const clearNotes = () => ({type: 'CLEAR_NOTES'});
 export const setNotes = arrNotes => ({type: 'SET_NOTES', notes:arrNotes});
 export const addNote = oNote => ({type: 'ADD_NOTE', note:oNote});
-export const removeNote = oNote => ({type: 'REMOVE_FNOTE', note:oNote});
+export const removeNote = oNote => ({type: 'REMOVE_NOTE', note:oNote});
