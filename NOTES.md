@@ -1,4 +1,5 @@
 Created astrosat-notes-app using create-react-app
+Left all defaults for browsersList
 
 Started and built app to check everything worked.
 
