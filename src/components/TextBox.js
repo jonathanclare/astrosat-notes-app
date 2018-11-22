@@ -12,6 +12,11 @@ export default class TextBox extends Component
         };
         this.handleChange = this.handleChange.bind(this);
     }
+    
+    componentDidUpdate(prevProps, prevState) 
+    {
+        if (prevProps.value !== this.props.value) this.setState({value: this.props.value});
+    }
 
     handleChange(event) 
     {

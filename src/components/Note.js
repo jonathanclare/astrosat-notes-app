@@ -35,26 +35,28 @@ class Note extends Component
     componentDidMount()
     {  
         console.log('componentDidMount');
-        this.onNoteIdChange();
+        this.onNoteIdChange(this.props.id);
     }
 
     componentDidUpdate(prevProps, prevState) 
     {
         console.log('componentDidUpdate');
         // Check if the note id has changed without the component mounting.
-        if (prevProps.id !== this.props.id) this.onNoteIdChange();
+        if (prevProps.id !== this.props.id) this.onNoteIdChange(this.props.id);
     }
 
     // If a note id has been passed in as a prop get the note object associated with it and update the state.
-    onNoteIdChange()
+    onNoteIdChange(id)
     {
-        const note = this.getNote(this.state.id);
-        this.setState({id:note.id, title:note.title, content:note.content});
+        this.noteId = id;
+        const note = this.getNote(id);
+        this.setState({title:note.title, content:note.content});
     }
 
     // Find a note using its unique id - or return a new note.
     getNote(id)
     {
+        console.log('getNote');
         const arrNotes = this.props.notes.filter(note => note.id === id);
         if (arrNotes.length > 0) 
             return arrNotes[0]; // Note found!
@@ -82,7 +84,7 @@ class Note extends Component
     onSaveBtnPressed()
     {
         console.log("onSaveBtnPressed")
-        const id = this.noteId ? this.noteId : uuidv4(); // Geenerate a new id if its a new note.
+        const id = this.noteId ? this.noteId : uuidv4(); // Generate a new id if its a new note.
         const note = {id:id, title:this.state.title, content:this.state.content};
         
         // Are we viewing a new note?
