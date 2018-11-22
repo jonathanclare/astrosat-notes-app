@@ -14,6 +14,6 @@ Added postbuild to package.json to copy build files from astrosat-notes-app to a
 URL didnt work first time out. Added homepage to package.json so that js and css files could be picked up from correct relative path
 "homepage": "https://jonathanclare.github.io/astrosat-notes/"
 
-Installed react-redux and react-router-dom
+Installed redux, react-redux and react-router-dom
 
 Started creating redux store.

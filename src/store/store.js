@@ -1,6 +1,6 @@
 import {createStore, combineReducers} from 'redux';
-import {fetchState, saveState} from './utils/localStorage';
-import debounce from './utils/debounce';
+import {fetchState, saveState} from '../utils/localStorage';
+import debounce from '../utils/debounce';
 
 // Reducers
 
@@ -15,8 +15,14 @@ const notes = (state = [], action) =>
             return [];
         case 'ADD_NOTE':
             return [...state, action.note];
+        case 'UPDATE_NOTE':
+            return state.map(note =>
+            {
+                if (note.id === action.note.id) return action.note;
+                return note;
+            });
         case 'REMOVE_NOTE':
-            return state.filter(note => note.id !== action.note.id);
+            return state.filter(note => note.id !== action.id);
         default:
             return state; 
     }
@@ -49,4 +55,5 @@ export default store;
 export const clearNotes = () => ({type: 'CLEAR_NOTES'});
 export const setNotes = arrNotes => ({type: 'SET_NOTES', notes:arrNotes});
 export const addNote = oNote => ({type: 'ADD_NOTE', note:oNote});
-export const removeNote = oNote => ({type: 'REMOVE_NOTE', note:oNote});
+export const updateNote = oNote => ({type: 'UPDATE_NOTE', note:oNote});
+export const removeNote = noteId => ({type: 'REMOVE_NOTE', id:noteId});

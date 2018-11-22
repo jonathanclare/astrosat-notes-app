@@ -1,28 +1,41 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {Provider, connect} from 'react-redux'
+import {BrowserRouter, Route, Redirect, Switch} from 'react-router-dom';
+import store from './store/store';
+import styles from './App.module.css';
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
-      </div>
-    );
-  }
-}
+export default class App extends Component
+{ 
+    render() 
+    {
+        return (
+            <Provider store={store}>   
+                <BrowserRouter basename={process.env.PUBLIC_URL}>
+                    <div className={styles.app}>
+                        <Switch>
+                            <Route exact path="/" component={AddNote} />
+                            <Route path="/add" component={AddNote} />
+                            <Route exact path="/edit/:id" component={EditNote} />
+                            <Route exact path="/notes/:id" component={ShowNote} />
+                            <Redirect to="/" />
+                        </Switch>
+                    </div>
+                </BrowserRouter>
+            </Provider>
+        );
+    }
+};
 
-export default App;
+// Route functions.
+const AddNote = props => 
+{
+    return (<div>Add Note</div>);
+};
+const EditNote = props => 
+{
+    return (<div>Add Note</div>);
+};
+const ShowNote = props => 
+{
+    return (<div>Add Note</div>);
+};
