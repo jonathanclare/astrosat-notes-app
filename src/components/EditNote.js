@@ -1,6 +1,7 @@
 import React, {Component}  from 'react';
 import TextBox from './TextBox';
 import TextArea from './TextArea';
+import NotesList from './NotesList';
 import debounce from '../utils/debounce';
 import styles from './EditNote.module.css';
 
@@ -33,7 +34,7 @@ export default class EditNote extends Component
         return (
             <div className={styles.main}>
                 <div className={styles.notesListContainer}>
-
+                    <NotesList />
                 </div>
                 <div className={styles.editContainer}>
                     <div className={styles.titleContainer}>
