@@ -29,6 +29,14 @@
     display: flex;
     flex-flow: column nowrap;
 }
+.headerMenu
+{
+    margin: 0 0 1rem 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items:center;
+    user-select: none;
+}
 .noteTitle
 {
     margin: 0 0 0.5rem 0;
@@ -38,29 +46,38 @@
     flex:1;
     margin: 0.5rem 0 0.5rem 0;
 }
-.menu
+.footerMenu
 {
     margin: 0.5rem 0 0 0;
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
     justify-content: flex-end;
     align-items:center;
     user-select: none;
 }
 .button
 {
+    color:inherit;
     cursor: pointer;
-    margin-bottom: 0.5rem;
     text-decoration: none;
     border-radius: 20px;
     padding: 0.3rem 1rem;
     border: 1px solid #ccd0d5;
     white-space: nowrap;
 }
+.buttonNew
+{
+    color: #0686d4;
+    background-color: #e3f1f9;
+}
+.button:not(:last-child)
+{
+    margin-right: 1rem;
+}
 .alert
 {
     border: 1px solid red;
-    color: #red;
+    color: red;
 }
 .button:hover
 {

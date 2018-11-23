@@ -12,9 +12,27 @@
     border-radius: 20px;
     padding: 1rem 1rem;
     border: 1px solid #ccd0d5;
+    background-color: #f7f7f7
 }
 .tag:hover
 {
     border: 1px solid #0686d4;
     color: #0686d4;
+}
+.tagSelected
+{
+    border: 1px solid #0686d4;
+    color: #0686d4;
+    background-color: #e3f1f9;
+}
+.title
+{
+
+}
+.date
+{
+    margin-top:0.5rem;
+    font-size: 0.7rem;
+    color: #777;
+    font-style: italic;
 }

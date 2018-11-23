@@ -2,10 +2,10 @@ import React, {Component}  from 'react';
 import TextBox from './TextBox';
 import TextArea from './TextArea';
 import NotesList from './NotesList';
-import debounce from '../utils/debounce';
 import {addNote, removeNote, updateNote} from '../store/store';
 import {connect} from 'react-redux';
 import uuidv4 from 'uuid/v4';
+import {Link} from 'react-router-dom';
 import styles from './Note.module.css';
 
 class Note extends Component
@@ -28,8 +28,8 @@ class Note extends Component
         };
 
         this.noteId = props.id;
-        this.onTitleChange = debounce(this.onTitleChange.bind(this), 1000);
-        this.onContentChange = debounce(this.onContentChange.bind(this), 1000);
+        this.onTitleChange = this.onTitleChange.bind(this);
+        this.onContentChange = this.onContentChange.bind(this);
     }
 
     componentDidMount()
@@ -97,22 +97,36 @@ class Note extends Component
             this.props.updateNote(note);
     }
 
+    // Delete note button pressed.
+    onDeleteBtnPressed()
+    {
+        console.log("onDeleteBtnPressed")
+        this.props.removeNote(this.noteId);
+    }
+
     render() 
     {
         return (
             <div className={styles.main}>
                 <div className={styles.notesList}>
-                    <NotesList notes={this.props.notes} />
+                    <NotesList notes={this.props.notes} selectedId={this.noteId} />
                 </div>
                 <div className={styles.noteEditor}>
+                    <div className={styles.headerMenu}>
+                        <Link className={`${styles.button} ${styles.buttonNew}`} to={`/`} title="Add A New Note"> 
+                            <i className="fas fa-plus"></i>&nbsp;&nbsp;New Note
+                        </Link>
+                    </div>
                     <div className={styles.noteTitle}>
                         <TextBox onChange={this.onTitleChange} value={this.state.title} />
                     </div>
                     <div className={styles.noteContent}>
                         <TextArea onChange={this.onContentChange} value={this.state.content} />
                     </div>
-                    <div className={styles.menu}>
-                        <div className={styles.button} onClick={() => this.onSaveBtnPressed()}>
+                    <div className={styles.footerMenu}>
+                        <div className={styles.button} title="Edit Note"><i className="fas fa-edit"></i>&nbsp;&nbsp;Edit</div>
+                        <div className={styles.button} onClick={() => this.onDeleteBtnPressed()} title="Delete Note"><i className="fas fa-trash"></i>&nbsp;&nbsp;Delete</div>
+                        <div className={styles.button} onClick={() => this.onSaveBtnPressed()} title="Save Note">
                             <i className="fas fa-save"></i>&nbsp;&nbsp;Save
                         </div>
                     </div>
