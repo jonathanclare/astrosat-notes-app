@@ -28,3 +28,9 @@ Started creating edit page as we need to be able to enter some notes before we c
 Installed moment for data manipulation.
 
 ISSUE WITH ADD NEW NOTE - BECAUSE THE NOTE ID ISNT UPDATED
+
+// TODO
+
+refactor css
+add sass
+Notes button should be refactored in to a view page and an edit page

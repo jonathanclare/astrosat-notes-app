@@ -25,10 +25,6 @@ export default class TextBox extends Component
 
     render() 
     {
-        return (
-            <React.Fragment>
-                <input className={styles.box} type="text" charSet="utf-8" value={this.state.value} onChange={this.handleChange} />
-            </React.Fragment>
-        );
+        return (<React.Fragment><input className={styles.box} type="text" charSet="utf-8" value={this.state.value} onChange={this.handleChange} /></React.Fragment>);
     }
 };

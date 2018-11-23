@@ -29,7 +29,7 @@
     display: flex;
     flex-flow: column nowrap;
 }
-.headerMenu
+.menu
 {
     margin: 0 0 1rem 0;
     display: flex;
@@ -37,23 +37,41 @@
     align-items:center;
     user-select: none;
 }
-.noteTitle
+.date
 {
-    margin: 0 0 0.5rem 0;
+    text-align: center;
+    margin: 1rem 0 0.5rem 0;
+    font-size: 0.7rem;
+    color: #777;
+    font-style: italic;
 }
-.noteContent
+.noteTitleContainer
+{
+    margin: 0.5rem 0 1rem 0;
+}
+.noteContentContainer
 {
     flex:1;
-    margin: 0.5rem 0 0.5rem 0;
+    margin: 1rem 0 0 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
-.footerMenu
+.noteContentContainerEditMode
 {
-    margin: 0.5rem 0 0 0;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: flex-end;
-    align-items:center;
-    user-select: none;
+    overflow-y: hidden;
+}
+.title
+{
+    text-align: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bold;
+    font-style: italic
+}
+.content
+{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    width:100%;
+    height:100%;
 }
 .button
 {
@@ -70,14 +88,14 @@
     color: #0686d4;
     background-color: #e3f1f9;
 }
+.buttonAlert
+{
+    color: #9a0000;
+    background-color:#f3dada;
+}
 .button:not(:last-child)
 {
     margin-right: 1rem;
-}
-.alert
-{
-    border: 1px solid red;
-    color: red;
 }
 .button:hover
 {
