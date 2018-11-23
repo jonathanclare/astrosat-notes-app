@@ -32,6 +32,7 @@ class Note extends Component
         this._modal = React.createRef();
         this.onTitleChange = this.onTitleChange.bind(this);
         this.onContentChange = this.onContentChange.bind(this);
+        this.onModalNoteSelected = this.onModalNoteSelected.bind(this);
     }
 
     componentDidMount()
@@ -93,6 +94,11 @@ class Note extends Component
         this._modal.current.open()
     }
 
+    onModalNoteSelected()
+    {
+        this._modal.current.close()
+    }
+
     render() 
     {
         const saveClassName = this.state.changesMade === true ? `${styles.btn} ${styles.btnAlert}` : `${styles.btn}`;
@@ -123,7 +129,7 @@ class Note extends Component
                 </div>
                 <Modal ref={this._modal}>
                     <div className={styles.notesListModal}>
-                        <NotesList notes={this.props.notes} selectedId={this.state.id} />
+                        <NotesList notes={this.props.notes} selectedId={this.state.id} onSelect={this.onModalNoteSelected}/>
                     </div>
                 </Modal>
             </div>

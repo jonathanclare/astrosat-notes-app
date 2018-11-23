@@ -35,16 +35,18 @@ export default class Modal extends Component
         }
     }  
 
-    close(evt) 
+    closeFromX(evt) 
     {   
-        if (hasClass(evt.target, 'modal') || hasClass(evt.target, 'modal-close'))
-        {
-            if (this.props.onClosing !== undefined) this.props.onClosing();
-            const modal = this.modal.current;
-            on(modal, this.transitionEvent, this.onClose);
-            removeClass(modal, 'modal-active');
-            removeClass(modal.getElementsByClassName('modal-content')[0], 'modal-content-active');
-        }
+        if (hasClass(evt.target, 'modal') || hasClass(evt.target, 'modal-close')) this.close()
+    }      
+
+    close() 
+    {   
+        if (this.props.onClosing !== undefined) this.props.onClosing();
+        const modal = this.modal.current;
+        on(modal, this.transitionEvent, this.onClose);
+        removeClass(modal, 'modal-active');
+        removeClass(modal.getElementsByClassName('modal-content')[0], 'modal-content-active');
     }      
 
     open() 
@@ -61,7 +63,7 @@ export default class Modal extends Component
     render() 
     {
         return (
-            <div ref={this.modal} className="modal modal-hidden" onClick={(evt) => this.close(evt)}>
+            <div ref={this.modal} className="modal modal-hidden" onClick={(evt) => this.closeFromX(evt)}>
                 <div className="modal-content">
                     <div className="modal-header">
                         {this.props.title !== undefined ? (<span className="modal-title">{this.props.title}</span>) : null}

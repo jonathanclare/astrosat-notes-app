@@ -11,7 +11,7 @@ const NotesList = props =>
     {
         const isSelected = oNote.id === props.selectedId ?  `${styles.tag} ${styles.tagSelected}`  : `${styles.tag}`;
         return (
-        <Link key={oNote.id} className={isSelected} to={`/${oNote.id}`} title={`Click to view ${oNote.title}`}> 
+        <Link onClick={() => {if (props.onSelect !== undefined) {props.onSelect()}}} key={oNote.id} className={isSelected} to={`/${oNote.id}`} title={`Click to view ${oNote.title}`}> 
             <div className={styles.title}>{oNote.title}</div>
             <div className={styles.date}>Last Updated: {dateFormatter(oNote.date).fromNow()}</div>
         </Link>)
