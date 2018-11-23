@@ -11,11 +11,13 @@
 {
     padding: 1rem;
     overflow-y: auto;
+    overflow-x: hidden;
     position:absolute;
     top:0;
     left:0;
     bottom:0;
     width:300px;
+    display: none;
 }
 .noteEditor
 {
@@ -24,10 +26,21 @@
     position:absolute;
     top:0;
     right:0;
-    left:300px;
+    left:0;
     bottom:0;
     display: flex;
     flex-flow: column nowrap;
+}
+@media all and (min-width: 768px) /* Tablet - 768px and larger */
+{
+    .notesList
+    {
+        display: inline;
+    }
+    .noteEditor
+    {
+        left:300px;
+    }
 }
 .menu
 {

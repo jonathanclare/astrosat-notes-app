@@ -20,6 +20,7 @@ class Note extends Component
 
         this.state =  
         { 
+            showNotesList: false,
             changesMade: false,
             mode: props.mode ? props.mode : 'view',
             id: props.id,
@@ -77,13 +78,23 @@ class Note extends Component
     // Delete note button pressed.
     onDeleteBtnPressed()
     {
-        this.props.removeNote(this.state.id);
-        this.props.history.push('/');
+        const r = window.confirm('Are you sure you want to delete this note?');
+        if (r === true) 
+        {
+            this.props.removeNote(this.state.id);
+            this.props.history.push('/');
+        }
+    }
+
+    // Toggle Notes list.
+    toggleNotesList()
+    {
+        this.setState({showNotesList:!this.state.showNotesList});
     }
 
     render() 
     {
-        const saveClassName = this.state.changesMade === true ? `${styles.button}` : `${styles.button} ${styles.buttonAlert}`;
+        const saveClassName = this.state.changesMade === true ? `${styles.button} ${styles.buttonAlert}` : `${styles.button}`;
         const noteClassName = this.props.mode === 'edit' ? `${styles.noteContentContainer} ${styles.noteContentContainerEditMode}` : `${styles.noteContentContainer}`;
         return (
             <div className={styles.main}>
@@ -96,6 +107,7 @@ class Note extends Component
                         {this.props.mode === 'view' ? <Link className={styles.button} to={`/${this.state.id}/edit`} title="Edit Note"><i className="fas fa-edit"></i>&nbsp;&nbsp;Edit</Link> : null}
                         {this.props.mode === 'view' ? <div className={styles.button} onClick={() => this.onDeleteBtnPressed()} title="Delete Note"><i className="fas fa-trash"></i>&nbsp;&nbsp;Delete</div> : null}
                         {this.props.mode === 'edit' ? <div className={saveClassName} onClick={() => this.onSaveBtnPressed()} title="Save Note"><i className="fas fa-save"></i>&nbsp;&nbsp;Save</div> : null}
+                        <div className={styles.button} onClick={() => this.toggleNotesList()} title="Toggle Notes List"><i className="fas fa-bars"></i></div>
                     </div>
                     <div className={styles.date}>{dateFormatter(this.state.date).format('llll')}</div>
                     <div className={styles.noteTitleContainer}>
@@ -126,4 +138,4 @@ const mapDispatchToProps = dispatch =>
     }
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Note)); // Need to add withRouter so we have access to history... this.props.history.push('/');
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Note)); // Need to add withRouter so we have access to history for deleting notes... this.props.history.push('/');

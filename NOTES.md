@@ -25,12 +25,10 @@ At this point should probably write some tests to test the routes and pass in a 
 
 Started creating edit page as we need to be able to enter some notes before we can test the routing.
 
-Installed moment for data manipulation.
+Installed moment for date manipulation.
 
-ISSUE WITH ADD NEW NOTE - BECAUSE THE NOTE ID ISNT UPDATED
 
 // TODO
-
 refactor css
 add sass
-Notes button should be refactored in to a view page and an edit page
+Notes Page should be refactored in to a view page and an edit page
