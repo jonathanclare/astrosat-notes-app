@@ -76,7 +76,7 @@
     align-items: flex-end;
     flex-flow: row nowrap;
     align-items:center;
-    justify-content: flex-end;
+    justify-content: center;
     user-select: none;
 }
 .date
