@@ -34,6 +34,7 @@ export default class App extends Component
 // Default view is dependent on notes having been created.
 const initApp = props => 
 {
+    console.log(props.notes)
     if (props.notes.length === 0)
         return newNote(); // No notes created yet.
     else

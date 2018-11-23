@@ -27,8 +27,8 @@ Started creating edit page as we need to be able to enter some notes before we c
 
 Installed moment for date manipulation.
 
-
 // TODO
 refactor css
 add sass
-Notes Page should be refactored in to a view page and an edit page
+Notes Page might be better refactored in to a view page and an edit page
+formatting of text coming out of text area

@@ -61,10 +61,20 @@ const notes = (state = [], action) =>
 const rootReducer = combineReducers({notes: notes});
 
 // Fetch any state stored in local storage and use this when creating the store.
-const persistedState = fetchState('astrosat-notes-app');
+let persistedState = fetchState('astrosat-notes-app');
 
 console.log('PERSISTED STATE FROM LOCAL STORAGE:');
 console.log(persistedState);
+
+if (persistedState === undefined)
+{
+    // Add some default notes if none have been created - otherwise interface looks a bit sparse.
+    persistedState = {notes:[
+        {id: "3167", title: "A Note", content: "Press the Edit Button to add some content", date: "2018-11-23T13:53:30.780Z"},
+        {id: "39f7", title: "Another Note", content: "Press the Edit Button to add some content", date: "2018-11-23T13:53:28.636Z"}
+    ]};
+}
+
 const store = createStore(rootReducer, persistedState);
 
 // Subscribe to changes to the store so we can update local storage.

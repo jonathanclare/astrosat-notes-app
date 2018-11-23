@@ -29,10 +29,12 @@ class Note extends Component
             content: 'Add Some Content'
         };
 
-        this._modal = React.createRef();
+        this._modal = React.createRef(); // Reference the modal so we can open / close it.
+
+        // Bind functions that are passed to children to "this".
         this.onTitleChange = this.onTitleChange.bind(this);
         this.onContentChange = this.onContentChange.bind(this);
-        this.onModalNoteSelected = this.onModalNoteSelected.bind(this);
+        this.onNoteSelected = this.onNoteSelected.bind(this);
     }
 
     componentDidMount()
@@ -88,13 +90,14 @@ class Note extends Component
         }
     }
 
-    // Toggle Notes list - used for responsive design (small screens).
+    // Open the modal.
     openNotesListModal()
     {
         this._modal.current.open()
     }
 
-    onModalNoteSelected()
+    // Close the modal when a note has been selected.
+    onNoteSelected()
     {
         this._modal.current.close()
     }
@@ -113,7 +116,7 @@ class Note extends Component
                         <Link className={`${styles.btn} ${styles.btnNew}`} to={`/new`} title="Add A New Note"><i className="fas fa-plus"></i>&nbsp;&nbsp;New Note</Link>
                         <div className={styles.btnNotesContainer}><div className={`${styles.btn} ${styles.btnNotes}`} onClick={() => this.openNotesListModal()} title="Open Notes List"><i className="fas fa-bars"></i></div></div>
                     </div>
-                    <div className={styles.date}>{dateFormatter(this.state.date).format('llll')}</div>
+                    <div className={styles.date}>Last Edited: {dateFormatter(this.state.date).format('llll')}</div>
                     <div className={styles.noteTitleContainer}>
                         {this.props.mode === 'edit' ? <TextBox onChange={this.onTitleChange} value={this.state.title} /> : <div className={styles.title} dangerouslySetInnerHTML={{__html: this.state.title}} />}
                     </div>
@@ -129,7 +132,7 @@ class Note extends Component
                 </div>
                 <Modal ref={this._modal}>
                     <div className={styles.notesListModal}>
-                        <NotesList notes={this.props.notes} selectedId={this.state.id} onSelect={this.onModalNoteSelected}/>
+                        <NotesList notes={this.props.notes} selectedId={this.state.id} onSelect={this.onNoteSelected}/>
                     </div>
                 </Modal>
             </div>
