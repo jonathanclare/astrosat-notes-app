@@ -6,6 +6,7 @@ import {addNote, removeNote, updateNote} from '../store/store';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import dateFormatter from '../utils/dateFormatter';
+import Modal from '../components/Modal';
 import styles from './Note.module.css';
 
 class Note extends Component
@@ -20,7 +21,6 @@ class Note extends Component
 
         this.state =  
         { 
-            showNotesList: false,
             changesMade: false,
             mode: props.mode ? props.mode : 'view',
             id: props.id,
@@ -29,6 +29,7 @@ class Note extends Component
             content: 'Add Some Content'
         };
 
+        this._modal = React.createRef();
         this.onTitleChange = this.onTitleChange.bind(this);
         this.onContentChange = this.onContentChange.bind(this);
     }
@@ -86,15 +87,15 @@ class Note extends Component
         }
     }
 
-    // Toggle Notes list.
-    toggleNotesList()
+    // Toggle Notes list - used for responsive design (small screens).
+    openNotesListModal()
     {
-        this.setState({showNotesList:!this.state.showNotesList});
+        this._modal.current.open()
     }
 
     render() 
     {
-        const saveClassName = this.state.changesMade === true ? `${styles.button} ${styles.buttonAlert}` : `${styles.button}`;
+        const saveClassName = this.state.changesMade === true ? `${styles.btn} ${styles.btnAlert}` : `${styles.btn}`;
         const noteClassName = this.props.mode === 'edit' ? `${styles.noteContentContainer} ${styles.noteContentContainerEditMode}` : `${styles.noteContentContainer}`;
         return (
             <div className={styles.main}>
@@ -102,12 +103,9 @@ class Note extends Component
                     <NotesList notes={this.props.notes} selectedId={this.state.id} />
                 </div>
                 <div className={styles.noteEditor}>
-                    <div className={styles.menu}>
-                        <Link className={`${styles.button} ${styles.buttonNew}`} to={`/new`} title="Add A New Note"><i className="fas fa-plus"></i>&nbsp;&nbsp;New Note</Link>
-                        {this.props.mode === 'view' ? <Link className={styles.button} to={`/${this.state.id}/edit`} title="Edit Note"><i className="fas fa-edit"></i>&nbsp;&nbsp;Edit</Link> : null}
-                        {this.props.mode === 'view' ? <div className={styles.button} onClick={() => this.onDeleteBtnPressed()} title="Delete Note"><i className="fas fa-trash"></i>&nbsp;&nbsp;Delete</div> : null}
-                        {this.props.mode === 'edit' ? <div className={saveClassName} onClick={() => this.onSaveBtnPressed()} title="Save Note"><i className="fas fa-save"></i>&nbsp;&nbsp;Save</div> : null}
-                        <div className={styles.button} onClick={() => this.toggleNotesList()} title="Toggle Notes List"><i className="fas fa-bars"></i></div>
+                    <div className={styles.headerMenu}>
+                        <Link className={`${styles.btn} ${styles.btnNew}`} to={`/new`} title="Add A New Note"><i className="fas fa-plus"></i>&nbsp;&nbsp;New Note</Link>
+                        <div className={styles.btnNotesContainer}><div className={`${styles.btn} ${styles.btnNotes}`} onClick={() => this.openNotesListModal()} title="Open Notes List"><i className="fas fa-bars"></i></div></div>
                     </div>
                     <div className={styles.date}>{dateFormatter(this.state.date).format('llll')}</div>
                     <div className={styles.noteTitleContainer}>
@@ -116,7 +114,18 @@ class Note extends Component
                     <div className={noteClassName}>
                         {this.props.mode === 'edit' ? <TextArea onChange={this.onContentChange} value={this.state.content} /> : <div className={styles.content} dangerouslySetInnerHTML={{__html: this.state.content}} />}
                     </div>
+                    <div className={styles.footerMenu}>
+                        {this.props.mode === 'view' ? <Link className={styles.btn} to={`/${this.state.id}/edit`} title="Edit Note"><i className="fas fa-edit"></i>&nbsp;&nbsp;Edit</Link> : null}
+                        {this.props.mode === 'view' ? <div className={styles.btn} onClick={() => this.onDeleteBtnPressed()} title="Delete Note"><i className="fas fa-trash"></i>&nbsp;&nbsp;Delete</div> : null}
+                        {this.props.mode === 'edit' ? <div className={saveClassName} onClick={() => this.onSaveBtnPressed()} title="Save Note"><i className="fas fa-save"></i>&nbsp;&nbsp;Save</div> : null}
+                    </div>
+
                 </div>
+                <Modal ref={this._modal}>
+                    <div className={styles.notesListModal}>
+                        <NotesList notes={this.props.notes} selectedId={this.state.id} />
+                    </div>
+                </Modal>
             </div>
         );
     }
